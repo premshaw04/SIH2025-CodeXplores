@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CropWise AI - Smart Farming Solutions</title>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="scripts.js"></script>
+</head>
+
+<body>
+    <header id="header">
+        <nav>
+            <a href="#" class="logo">🌾 CropWise AI</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="scrollToSection('home')">Home</a></li>
+                <li><a href="#features" onclick="scrollToSection('features')">Features</a></li>
+                <li><a href="#recommend" onclick="scrollToSection('recommend')">Recommendations</a></li>
+                <li><a href="#weather" onclick="scrollToSection('weather')">Weather</a></li>
+                <li><a href="#market" onclick="scrollToSection('market')">Market</a></li>
+                <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
+            </ul>
+            <div class="mobile-menu" onclick="toggleMobileMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Smart Crop Recommendations</h1>
+                    <p>Leverage AI to make informed farming decisions and maximize your harvest with data-driven
+                        insights</p>
+                    <a href="#recommend" class="cta-button" onclick="scrollToSection('recommend')">Get Started Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid animate-on-scroll">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="10000">0</span>
+                        <span class="stat-label">Happy Farmers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="500">0</span>
+                        <span class="stat-label">Crop Varieties</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="95">0</span>
+                        <span class="stat-label">Accuracy Rate</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="25">0</span>
+                        <span class="stat-label">States Covered</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="animate-on-scroll">Why Choose CropWise AI?</h2>
+                <div class="feature-grid">
+                    <div class="feature-card animate-on-scroll">
+                        <span class="feature-icon">🤖</span>
+                        <h3>AI-Powered Analysis</h3>
+                        <p>Advanced machine learning algorithms analyze soil, weather, and market data to provide
+                            personalized crop recommendations tailored to your specific conditions.</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <span class="feature-icon">🌡</span>
+                        <h3>Real-time Weather Integration</h3>
+                        <p>Get up-to-date weather forecasts and climate data to make informed planting and harvesting
+                            decisions with precise meteorological insights.</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <span class="feature-icon">💰</span>
+                        <h3>Market Price Analysis</h3>
+                        <p>Access current market prices and trends to choose the most profitable crops for your region
+                            and maximize your agricultural income.</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <span class="feature-icon">🌱</span>
+                        <h3>Soil Health Monitoring</h3>
+                        <p>Analyze soil pH, nutrients, and conditions to optimize crop selection and improve yield
+                            quality through scientific soil assessment.</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <span class="feature-icon">📱</span>
+                        <h3>Smart Chatbot Assistant</h3>
+                        <p>Get instant answers to your farming questions with our AI-powered chatbot available 24/7 for
+                            continuous agricultural support.</p>
+                    </div>
+                    <div class="feature-card animate-on-scroll">
+                        <span class="feature-icon">📊</span>
+                        <h3>Yield Prediction</h3>
+                        <p>Predict potential yields and profitability before planting to make data-driven decisions and
+                            plan your farming strategy effectively.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommend" class="recommendation-form">
+            <div class="container">
+                <div class="form-container animate-on-scroll">
+                    <h2>Get Your AI Crop Recommendation</h2>
+
+                    <form id="cropForm" class="form-grid">
+                        <div class="form-group">
+                            <label for="location">📍 Location/State</label>
+                            <select id="location" required>
+                                <option value="">Select your state</option>
+                                <option value="andhra-pradesh">Andhra Pradesh</option>
+                                <option value="bihar">Bihar</option>
+                                <option value="gujarat">Gujarat</option>
+                                <option value="haryana">Haryana</option>
+                                <option value="karnataka">Karnataka</option>
+                                <option value="madhya-pradesh">Madhya Pradesh</option>
+                                <option value="maharashtra">Maharashtra</option>
+                                <option value="punjab">Punjab</option>
+                                <option value="rajasthan">Rajasthan</option>
+                                <option value="tamil-nadu">Tamil Nadu</option>
+                                <option value="uttar-pradesh">Uttar Pradesh</option>
+                                <option value="west-bengal">West Bengal</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="season">🗓 Season</label>
+                            <select id="season" required>
+                                <option value="">Select season</option>
+                                <option value="kharif">Kharif (June-October)</option>
+                                <option value="rabi">Rabi (November-April)</option>
+                                <option value="zaid">Zaid (April-June)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soilType">🌱 Soil Type</label>
+                            <select id="soilType" required>
+                                <option value="">Select soil type</option>
+                                <option value="alluvial">Alluvial Soil</option>
+                                <option value="black">Black Cotton Soil</option>
+                                <option value="clay">Clay Soil</option>
+                                <option value="laterite">Laterite Soil</option>
+                                <option value="loamy">Loamy Soil</option>
+                                <option value="red">Red Soil</option>
+                                <option value="sandy">Sandy Soil</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="soilPH">⚗ Soil pH Level</label>
+                            <input type="number" id="soilPH" min="0" max="14" step="0.1" placeholder="e.g., 6.5"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rainfall">🌧 Expected Rainfall (mm)</label>
+                            <input type="number" id="rainfall" min="0" max="5000" placeholder="e.g., 800" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="temperature">🌡 Average Temperature (°C)</label>
+                            <input type="number" id="temperature" min="-10" max="50" placeholder="e.g., 25" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="farmSize">📏 Farm Size (hectares)</label>
+                            <input type="number" id="farmSize" min="0.1" step="0.1" placeholder="e.g., 2.5" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget">💰 Budget (₹)</label>
+                            <input type="number" id="budget" min="1000" placeholder="e.g., 50000" required>
+                        </div>
+                    </form>
+
+                    <div class="submit-button">
+                        <button type="button" onclick="getRecommendation()" class="cta-button">🚀 Get AI
+                            Recommendation</button>
+                    </div>
+
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>Analyzing your data with AI...</p>
+                    </div>
+
+                    <div id="results" class="result-section">
+                        <h3>🎯 Recommended Crops for You:</h3>
+                        <div id="cropResults"></div>
+                        <div id="additionalInfo"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="weather" class="weather-section">
+            <div class="container">
+                <div class="weather-widget animate-on-scroll">
+                    <h2>🌤 Weather Forecast & Agricultural Insights</h2>
+                    <p>Real-time weather data to optimize your farming decisions</p>
+                    <div class="weather-grid" id="weatherGrid">
+                        <div class="weather-item">
+                            <span class="weather-value" id="temperature-val">28°C</span>
+                            <span>Temperature</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-value" id="humidity-val">65%</span>
+                            <span>Humidity</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-value" id="rainfall-val">30%</span>
+                            <span>Rainfall Chance</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-value" id="wind-val">12 km/h</span>
+                            <span>Wind Speed</span>
+                        </div>
+                    </div>
+                    <button onclick="updateWeather()" class="cta-button" style="margin-top: 2rem;">🔄 Update
+                        Weather</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="market-section">
+            <div class="container">
+                <div class="market-prices animate-on-scroll">
+                    <h2>📈 Current Market Prices</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="price-table" id="priceTable">
+                            <thead>
+                                <tr>
+                                    <th>🌾 Crop</th>
+                                    <th>💰 Current Price (₹/quintal)</th>
+                                    <th>📊 Trend</th>
+                                    <th>🏪 Market</th>
+                                    <th>📅 Last Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody id="priceTableBody">
+                                <!-- Market data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button onclick="updateMarketPrices()" class="cta-button" style="margin-top: 2rem;">🔄 Refresh
+                        Prices</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🌾 CropWise AI</h3>
+                    <p>Empowering farmers with AI-driven insights for sustainable agriculture and maximum yields. Join
+                        thousands of farmers who trust our technology.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook">📘</a>
+                        <a href="#" title="Twitter">🐦</a>
+                        <a href="#" title="Instagram">📸</a>
+                        <a href="#" title="LinkedIn">💼</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>🔗 Quick Links</h3>
+                    <a href="#features" onclick="scrollToSection('features')">Features</a>
+                    <a href="#recommend" onclick="scrollToSection('recommend')">Get Recommendations</a>
+                    <a href="#weather" onclick="scrollToSection('weather')">Weather</a>
+                    <a href="#market" onclick="scrollToSection('market')">Market Prices</a>
+                    <a href="#">API Documentation</a>
+                </div>
+                <div class="footer-section">
+                    <h3>🆘 Support</h3>
+                    <a href="#">Help Center</a>
+                    <a href="#">Contact Support</a>
+                    <a href="#">User Guide</a>
+                    <a href="#">Video Tutorials</a>
+                    <a href="#">FAQ</a>
+                </div>
+                <div class="footer-section">
+                    <h3>📞 Connect With Us</h3>
+                    <a href="mailto:info@cropwise.ai">📧 info@cropwise.ai</a>
+                    <a href="tel:+911234567890">📱 +91-1234567890</a>
+                    <a href="#">🏢 Bangalore, India</a>
+                    <a href="#">💬 Live Chat Support</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CropWise AI. All rights reserved. | Made with ❤ for Hackathon 🏆</p>
+                <p>Empowering Agriculture Through Technology</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <button class="chatbot-toggle" onclick="toggleChatbot()" title="Chat with AI Assistant">💬</button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                🤖 CropWise Assistant
+                <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.3rem;">AI-Powered Farming Helper</div>
+            </div>
+            <div class="chatbot-messages" id="chatMessages">
+                <div class="message bot-message">
+                    Hello! 👋 I'm your AI farming assistant. I can help you with:
+                    <br><br>
+                    🌾 Crop recommendations<br>
+                    🌡 Weather insights<br>
+                    💰 Market prices<br>
+                    🌱 Farming tips<br>
+                    🐛 Pest management<br>
+                    <br>
+                    What would you like to know?
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Ask me anything about farming..."
+                    onkeypress="handleEnter(event)" maxlength="500">
+                <button onclick="sendMessage()" title="Send message">Send</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
