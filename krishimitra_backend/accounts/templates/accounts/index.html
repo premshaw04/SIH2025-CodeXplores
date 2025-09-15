@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,11 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KrishiMitra AI - Smart Farming Solutions</title>
-    <link rel="stylesheet" href="style/style.css">
-    <script src="scripts.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
 </head>
 
 <body>
+    <!-- Header / Navigation -->
     <header id="header">
         <nav>
             <a href="#" class="logo">🌾 KrishiMitra AI</a>
@@ -19,7 +22,7 @@
                 <li><a href="#recommend" onclick="scrollToSection('recommend')">Recommendations</a></li>
                 <li><a href="#weather" onclick="scrollToSection('weather')">Weather</a></li>
                 <li><a href="#market" onclick="scrollToSection('market')">Market</a></li>
-                <li><a href="signinPage/signin.html" onclick="scrollToSection('signin')">Sign In </a></li>
+                <li><a href="{% url 'signin' %}">Sign In</a></li>
             </ul>
             <div class="mobile-menu" onclick="toggleMobileMenu()">
                 <div></div>
@@ -30,17 +33,18 @@
     </header>
 
     <main>
+        <!-- Hero Section -->
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-content">
                     <h1>Smart Crop Recommendations</h1>
-                    <p>Leverage AI to make informed farming decisions and maximize your harvest with data-driven
-                        insights</p>
+                    <p>Leverage AI to make informed farming decisions and maximize your harvest with data-driven insights</p>
                     <a href="#recommend" class="cta-button" onclick="scrollToSection('recommend')">Get Started Now</a>
                 </div>
             </div>
         </section>
 
+        <!-- Stats Section -->
         <section class="stats">
             <div class="container">
                 <div class="stats-grid animate-on-scroll">
@@ -64,6 +68,7 @@
             </div>
         </section>
 
+        <!-- Features Section -->
         <section id="features" class="features">
             <div class="container">
                 <h2 class="animate-on-scroll">Why Choose KrishiMitra AI?</h2>
@@ -71,48 +76,42 @@
                     <div class="feature-card animate-on-scroll">
                         <span class="feature-icon">🤖</span>
                         <h3>AI-Powered Analysis</h3>
-                        <p>Advanced machine learning algorithms analyze soil, weather, and market data to provide
-                            personalized crop recommendations tailored to your specific conditions.</p>
+                        <p>Advanced machine learning algorithms analyze soil, weather, and market data to provide personalized crop recommendations tailored to your specific conditions.</p>
                     </div>
                     <div class="feature-card animate-on-scroll">
                         <span class="feature-icon">🌡</span>
                         <h3>Real-time Weather Integration</h3>
-                        <p>Get up-to-date weather forecasts and climate data to make informed planting and harvesting
-                            decisions with precise meteorological insights.</p>
+                        <p>Get up-to-date weather forecasts and climate data to make informed planting and harvesting decisions with precise meteorological insights.</p>
                     </div>
                     <div class="feature-card animate-on-scroll">
                         <span class="feature-icon">💰</span>
                         <h3>Market Price Analysis</h3>
-                        <p>Access current market prices and trends to choose the most profitable crops for your region
-                            and maximize your agricultural income.</p>
+                        <p>Access current market prices and trends to choose the most profitable crops for your region and maximize your agricultural income.</p>
                     </div>
                     <div class="feature-card animate-on-scroll">
                         <span class="feature-icon">🌱</span>
                         <h3>Soil Health Monitoring</h3>
-                        <p>Analyze soil pH, nutrients, and conditions to optimize crop selection and improve yield
-                            quality through scientific soil assessment.</p>
+                        <p>Analyze soil pH, nutrients, and conditions to optimize crop selection and improve yield quality through scientific soil assessment.</p>
                     </div>
                     <div class="feature-card animate-on-scroll">
                         <span class="feature-icon">📱</span>
                         <h3>Smart Chatbot Assistant</h3>
-                        <p>Get instant answers to your farming questions with our AI-powered chatbot available 24/7 for
-                            continuous agricultural support.</p>
+                        <p>Get instant answers to your farming questions with our AI-powered chatbot available 24/7 for continuous agricultural support.</p>
                     </div>
                     <div class="feature-card animate-on-scroll">
                         <span class="feature-icon">📊</span>
                         <h3>Yield Prediction</h3>
-                        <p>Predict potential yields and profitability before planting to make data-driven decisions and
-                            plan your farming strategy effectively.</p>
+                        <p>Predict potential yields and profitability before planting to make data-driven decisions and plan your farming strategy effectively.</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Recommendation Form Section -->
         <section id="recommend" class="recommendation-form">
             <div class="container">
                 <div class="form-container animate-on-scroll">
                     <h2>Get Your AI Crop Recommendation</h2>
-
                     <form id="cropForm" class="form-grid">
                         <div class="form-group">
                             <label for="location">📍 Location/State</label>
@@ -132,7 +131,6 @@
                                 <option value="west-bengal">West Bengal</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="season">🗓 Season</label>
                             <select id="season" required>
@@ -142,7 +140,6 @@
                                 <option value="zaid">Zaid (April-June)</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="soilType">🌱 Soil Type</label>
                             <select id="soilType" required>
@@ -156,44 +153,34 @@
                                 <option value="sandy">Sandy Soil</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="soilPH">⚗ Soil pH Level</label>
-                            <input type="number" id="soilPH" min="0" max="14" step="0.1" placeholder="e.g., 6.5"
-                                required>
+                            <input type="number" id="soilPH" min="0" max="14" step="0.1" placeholder="e.g., 6.5" required>
                         </div>
-
                         <div class="form-group">
                             <label for="rainfall">🌧 Expected Rainfall (mm)</label>
                             <input type="number" id="rainfall" min="0" max="5000" placeholder="e.g., 800" required>
                         </div>
-
                         <div class="form-group">
                             <label for="temperature">🌡 Average Temperature (°C)</label>
                             <input type="number" id="temperature" min="-10" max="50" placeholder="e.g., 25" required>
                         </div>
-
                         <div class="form-group">
                             <label for="farmSize">📏 Farm Size (hectares)</label>
                             <input type="number" id="farmSize" min="0.1" step="0.1" placeholder="e.g., 2.5" required>
                         </div>
-
                         <div class="form-group">
                             <label for="budget">💰 Budget (₹)</label>
                             <input type="number" id="budget" min="1000" placeholder="e.g., 50000" required>
                         </div>
                     </form>
-
                     <div class="submit-button">
-                        <button type="button" onclick="getRecommendation()" class="cta-button">🚀 Get AI
-                            Recommendation</button>
+                        <button type="button" onclick="getRecommendation()" class="cta-button">🚀 Get AI Recommendation</button>
                     </div>
-
                     <div class="loading" id="loading">
                         <div class="spinner"></div>
                         <p>Analyzing your data with AI...</p>
                     </div>
-
                     <div id="results" class="result-section">
                         <h3> Recommended Crops for You:</h3>
                         <div id="cropResults"></div>
@@ -203,6 +190,7 @@
             </div>
         </section>
 
+        <!-- Weather Section -->
         <section id="weather" class="weather-section">
             <div class="container">
                 <div class="weather-widget animate-on-scroll">
@@ -226,20 +214,18 @@
                             <span>Wind Speed</span>
                         </div>
                     </div>
-                    <button onclick="updateWeather()" class="cta-button" style="margin-top: 2rem;"> Update
-                        Weather</button>
-
-                    <button onclick="updatesevenWeather()" class="cta-button" style="margin-top: 2rem;"> Next 7 days
-                        forecast</button>
+                    <button onclick="updateWeather()" class="cta-button" style="margin-top:2rem;">🌦 Update Weather</button>
+                    <button onclick="updatesevenWeather()" class="cta-button" style="margin-top:2rem;">7 days Weather</button>
                 </div>
             </div>
         </section>
 
+        <!-- Market Section -->
         <section id="market" class="market-section">
             <div class="container">
                 <div class="market-prices animate-on-scroll">
                     <h2>📈 Current Market Prices</h2>
-                    <div style="overflow-x: auto;">
+                    <div style="overflow-x:auto;">
                         <table class="price-table" id="priceTable">
                             <thead>
                                 <tr>
@@ -251,24 +237,23 @@
                                 </tr>
                             </thead>
                             <tbody id="priceTableBody">
-                                <!-- Market data will be populated here -->
+                                <!-- Market data populated by JS -->
                             </tbody>
                         </table>
                     </div>
-                    <button onclick="updateMarketPrices()" class="cta-button" style="margin-top: 2rem;">Refresh
-                        Prices</button>
+                    <button onclick="updateMarketPrices()" class="cta-button" style="margin-top:2rem;">🔄 Refresh Prices</button>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Footer Section -->
     <footer id="contact" class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>🌾 KrishiMitra AI</h3>
-                    <p>Empowering farmers with AI-driven insights for sustainable agriculture and maximum yields. Join
-                        thousands of farmers who trust our technology.</p>
+                    <p>Empowering farmers with AI-driven insights for sustainable agriculture and maximum yields. Join thousands of farmers who trust our technology.</p>
                     <div class="social-links">
                         <a href="#" title="Facebook">📘</a>
                         <a href="#" title="Twitter">🐦</a>
@@ -301,7 +286,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 KrishiMitra AI. All rights reserved. | Made with ❤ for Hackathon 🏆</p>
+                <p>&copy; 2024 KrishiMitra AI. All rights reserved.</p>
                 <p>Empowering Agriculture Through Technology</p>
             </div>
         </div>
@@ -313,7 +298,7 @@
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
                 🤖 KrishiMitra Assistant
-                <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.3rem;">AI-Powered Farming Helper</div>
+                <div style="font-size:0.9rem; opacity:0.9; margin-top:0.3rem;">AI-Powered Farming Helper</div>
             </div>
             <div class="chatbot-messages" id="chatMessages">
                 <div class="message bot-message">
@@ -322,20 +307,16 @@
                     🌾 Crop recommendations<br>
                     🌡 Weather insights<br>
                     💰 Market prices<br>
-                    🌱 Farming tips<br>
-                    🐛 Pest management<br>
-                    <br>
-                    What would you like to know?
+                    Ask me anything about your farm!
                 </div>
             </div>
-            <div class="chatbot-input">
-                <input type="text" id="chatInput" placeholder="Ask me anything about farming..."
-                    onkeypress="handleEnter(event)" maxlength="500">
-                <button onclick="sendMessage()" title="Send message">Send</button>
-            </div>
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="if(event.key==='Enter'){sendMessage();}">
+            <button onclick="sendMessage()" class="cta-button">Send</button>
         </div>
     </div>
 
+    <!-- JS Scripts -->
+    <script src="{% static 'accounts/js/scripts.js' %}"></script>
 </body>
 
 </html>
