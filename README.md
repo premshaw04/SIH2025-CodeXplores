@@ -1,4 +1,4 @@
-# SIH2025-demon-slayers
+# SIH2025-codeXplores
 Al-Based Crop Recommendation for Farmers
 Background -
 
