@@ -42,11 +42,23 @@ nav {
 }
 
 .logo {
+    display: flex;
+    /* keep logo + text in one row */
+    align-items: center;
+    /* vertical alignment */
     font-size: 2rem;
     font-weight: bold;
     color: #4CAF50;
     text-decoration: none;
     transition: transform 0.3s ease;
+}
+
+.logo img {
+    height: 60px;
+    /* adjust as per your logo size */
+    margin-right: 10px;
+    /* spacing between logo and text */
+    vertical-align: middle;
 }
 
 .logo:hover {
@@ -106,11 +118,19 @@ main {
 
 .hero {
     background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    /* fallback */
+    background-image:
+        linear-gradient(135deg, rgba(66, 183, 100, 0.15), rgba(49, 151, 55, 0.14)),
+        url('https://i.ibb.co/nNJsZptN/IMG-20250917-WA0071.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: white;
-    padding: 5rem 0;
+    padding: 4rem 0;
     text-align: center;
     position: relative;
     overflow: hidden;
+
 }
 
 .hero::before {
@@ -168,7 +188,6 @@ main {
 .cta-button {
     background: linear-gradient(45deg, #FF6B35, #F7931E);
     color: white;
-    margin-right: 40px;
     padding: 1rem 2rem;
     border: none;
     border-radius: 50px;
