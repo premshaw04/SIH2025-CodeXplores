@@ -3,9 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+
+# Home Page
 def home_page(request):
     return render(request, "accounts/index.html")
 
+
+# Sign In Page
 def signin_page(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -16,8 +20,10 @@ def signin_page(request):
             return redirect('home')  # after login go to homepage
         else:
             messages.error(request, "Invalid credentials")
-    return render(request, "accounts/signin.html")  # your frontend login page
+    return render(request, "accounts/signin.html")  # Sign In template
 
+
+# Sign Up Page
 def signup_page(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -31,4 +37,20 @@ def signup_page(request):
         user.save()
         messages.success(request, "Account created successfully! Please sign in.")
         return redirect('signin')
-    return render(request, "signin.html")  # or signup.html if separate
+    return render(request, "accounts/signin.html")  # Reuse the same template with toggle
+
+
+# Logout
+def logout_user(request):
+    logout(request)
+    return redirect('signin')
+
+
+# Password Reset Page
+def password_reset_page(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        # You can integrate Django's password reset logic here
+        messages.success(request, f"Password reset link sent to {email} (simulation).")
+        return redirect('signin')
+    return render(request, "accounts/password_reset.html")  # Create this template

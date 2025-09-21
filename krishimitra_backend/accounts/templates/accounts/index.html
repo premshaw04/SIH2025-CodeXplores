@@ -38,19 +38,21 @@
             <!-- Right Nav -->
             <div class="nav-right">
                 <ul class="nav-links-right">
-                    <li><a href="#weather" onclick="scrollToSection('weather')"><span class="material-symbols-outlined">
-                                cloud
-                            </span></a></li>
-                    <li><a href="\krishimitra_backend\accounts\templates\accounts\signin.html"><span
-                                class="material-symbols-outlined">
-                                person
-                            </span></a></li>
+                    <li>
+                        <a href="#weather" onclick="scrollToSection('weather')">
+                            <span class="material-symbols-outlined">cloud</span>
+                        </a>
+                    </li>
+                    <li>
+                        <!-- Updated: profile icon links to Django signin page -->
+                        <a href="{% url 'signin' %}" class="{% if request.path == '/signin/' %}active{% endif %}">
+                            <span class="material-symbols-outlined">person</span>
+                        </a>    
+                    </li>
                 </ul>
-                <button class="toggle-btn" id="themeToggleDesktop"> <span class="material-symbols-outlined theme-icon">
-                        dark_mode
-                    </span>
+                <button class="toggle-btn" id="themeToggleDesktop">
+                    <span class="material-symbols-outlined theme-icon">dark_mode</span>
                 </button>
-
             </div>
 
             <!-- Mobile Hamburger -->
@@ -69,13 +71,16 @@
                 <li><a href="#recommend" onclick="scrollToSection('recommend')">Recommendations</a></li>
                 <li><a href="#market" onclick="scrollToSection('market')">Market</a></li>
                 <li><a href="#weather" onclick="scrollToSection('weather')">Weather</a></li>
-                <li><a href="\krishimitra_backend\accounts\templates\accounts\signin.html">Sign In</a></li>
+                <!-- Updated: mobile signin link -->
+                <li>
+                    <a href="{% url 'signin' %}" class="{% if request.path == '/signin/' %}active{% endif %}">
+                        Sign In
+                    </a>
+                </li>
             </ul>
-            <button class="toggle-btn" id="themeToggleMobile"> <span class="material-symbols-outlined theme-icon">
-                    dark_mode
-                </span>
+            <button class="toggle-btn" id="themeToggleMobile">
+                <span class="material-symbols-outlined theme-icon">dark_mode</span>
             </button>
-
         </div>
     </header>
 
