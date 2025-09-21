@@ -194,8 +194,6 @@ nav {
 }
 
 
-
-
 main {
     margin-top: 80px;
 }
@@ -452,6 +450,12 @@ main {
     padding: 5rem 0;
     position: relative;
 }
+ .recommendation-form{
+    background-image: url('https://myplantin.com/_next/image?url=https:%2F%2Fstrapi.myplantin.com%2FDepositphotos_20087015_XL_min_5e01e6e323.webp&w=1920&q=75');
+     
+    background-size: cover;
+    background-position: center;
+ }
 
 .recommendation-form::before {
     content: '';
@@ -608,7 +612,8 @@ main {
 
 .weather-section {
     padding: 4rem 0;
-    background: white;
+    background: rgb(196, 232, 245);
+    background: linear-gradient(to top,rgb(77, 169, 197),white);
 }
 
 .weather-widget {
@@ -666,7 +671,7 @@ main {
 
 .market-section {
     padding: 4rem 0;
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    background: linear-gradient(to top, rgb(12, 84, 139),white);
 }
 
 .market-prices {
@@ -679,7 +684,7 @@ main {
 .market-prices h2 {
     text-align: center;
     margin-bottom: 2rem;
-    color: #2E7D32;
+    color: white;
     font-size: 2.2rem;
 }
 
@@ -700,7 +705,7 @@ main {
 }
 
 .price-table th {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
+    background: linear-gradient(135deg, #49c1cf, #2a507c);
     color: white;
     font-weight: 600;
 }
@@ -714,6 +719,10 @@ main {
 .price-table tr:nth-child(even) {
     background: #f9f9f9;
 }
+.price-table tr:nth-child(odd) {
+    background: #f9f9f9;
+}
+
 
 .trend-up {
     color: #4CAF50;
@@ -935,7 +944,7 @@ main {
 }
 
 .footer {
-    background: linear-gradient(135deg, #2E7D32, #1B5E20);
+    background: linear-gradient(135deg, #0e0e0e, #044609);
     color: white;
     padding: 4rem 0 2rem;
     text-align: center;
@@ -1220,3 +1229,18 @@ body.dark-mode .toggle-btn {
     font-weight: bold;
     border-bottom: 2px solid #00a859;
 }
+.weather-widget{
+    background-image: url('https://c.pxhere.com/photos/0a/c2/crop_dark_farm_field_landscape_night_rural_storm-1062244.jpg!d');
+     
+    background-size: cover;
+    background-position: center;
+ }
+ 
+
+ .market-prices{
+    background-image: url('https://static.vecteezy.com/system/resources/previews/001/330/263/non_2x/stock-market-graph-trading-chart-for-business-and-finance-free-vector.jpg');
+     
+    background-size: cover;
+    background-position: center;
+ }
+ 
