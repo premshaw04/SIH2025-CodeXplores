@@ -497,6 +497,45 @@
 
     </script>
 
+ <!-- Community Toggle Button and Panel -->
+    <div class="community-container">
+        <button class="community-toggle" onclick="toggleCommunity()" title="Community & Expert Consultation">
+            🌾
+        </button>
+        <div class="community-panel" id="communityPanel">
+            <div class="community-header">
+                <div>🌾 FarmConnect Community</div>
+                <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.3rem;">Connect • Learn • Grow Together</div>
+            </div>
+            
+            <div class="community-tabs">
+                <button class="tab-btn active" onclick="switchTab('community')">Community</button>
+                <button class="tab-btn" onclick="switchTab('consultancy')">Expert Help</button>
+            </div>
+            
+            <div class="community-content" id="communityContent">
+                <!-- Community Tab Content -->
+                <div id="communityTab" class="tab-content">
+                    <div class="create-post">
+                        <textarea placeholder="Share your farming experience, ask questions, or seek advice..." id="postText"></textarea>
+                        <button class="post-btn" onclick="createPost()">Post</button>
+                        <div style="clear: both;"></div>
+                    </div>
+                    
+                    <div id="communityPosts">
+                        <!-- Posts will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Consultancy Tab Content -->
+                <div id="consultancyTab" class="tab-content" style="display: none;">
+                    <div class="consultancy-options" id="consultancyOptions">
+                        <!-- Consultant cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

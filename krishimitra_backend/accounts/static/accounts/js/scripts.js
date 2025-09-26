@@ -910,3 +910,281 @@ window.addEventListener('load', function () {
     populateMarketData();
     updateWeatherData();
 });
+
+ let communityOpen = false;
+        let activeTab = 'community';
+
+        // Sample community posts data
+        const communityPosts = [
+            {
+                id: 1,
+                user: "RameshF",
+                avatar: "R",
+                content: "Just harvested my wheat crop! Got 35 quintals per hectare this season. The AI recommendations really helped with the timing. 🌾",
+                likes: 24,
+                replies: 7,
+                time: "2 hours ago"
+            },
+            {
+                id: 2,
+                user: "PriyaK",
+                avatar: "P", 
+                content: "Has anyone tried intercropping tomatoes with marigold? I'm seeing great results in pest control! 🍅🌼",
+                likes: 18,
+                replies: 12,
+                time: "5 hours ago"
+            },
+            {
+                id: 3,
+                user: "SureshA",
+                avatar: "S",
+                content: "Cotton prices are looking good this month. Market analysis from the app was spot on! Thanks KrishiGrow! 📈",
+                likes: 31,
+                replies: 9,
+                time: "1 day ago"
+            },
+            {
+                id: 4,
+                user: "MeeraS",
+                avatar: "M",
+                content: "Looking for advice on organic fertilizers for rice cultivation. What has worked best for you?",
+                likes: 15,
+                replies: 23,
+                time: "2 days ago"
+            }
+        ];
+
+        // Sample consultant data
+        const consultants = [
+            {
+                id: 1,
+                name: "Dr. Arvind Kumar",
+                speciality: "Soil Health & Crop Nutrition",
+                rating: "⭐⭐⭐⭐⭐",
+                price: "₹500/hour",
+                experience: "15+ years",
+                available: true
+            },
+            {
+                id: 2,
+                name: "Prof. Sunita Sharma",
+                speciality: "Pest Management & Organic Farming",
+                rating: "⭐⭐⭐⭐⭐",
+                price: "₹600/hour", 
+                experience: "20+ years",
+                available: true
+            },
+            {
+                id: 3,
+                name: "Rajesh Patil",
+                speciality: "Market Analysis & Crop Planning",
+                rating: "⭐⭐⭐⭐",
+                price: "₹400/hour",
+                experience: "12+ years",
+                available: false
+            },
+            {
+                id: 4,
+                name: "Dr. Kavitha Reddy",
+                speciality: "Water Management & Irrigation",
+                rating: "⭐⭐⭐⭐⭐",
+                price: "₹550/hour",
+                experience: "18+ years", 
+                available: true
+            }
+        ];
+
+        // Toggle community panel
+        function toggleCommunity() {
+            const communityPanel = document.getElementById('communityPanel');
+            communityOpen = !communityOpen;
+
+            if (communityOpen) {
+                communityPanel.style.display = 'flex';
+                loadCommunityContent();
+            } else {
+                communityPanel.style.display = 'none';
+            }
+        }
+
+        // Switch between tabs
+        function switchTab(tab) {
+            activeTab = tab;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show/hide content
+            document.getElementById('communityTab').style.display = tab === 'community' ? 'block' : 'none';
+            document.getElementById('consultancyTab').style.display = tab === 'consultancy' ? 'block' : 'none';
+            
+            if (tab === 'consultancy') {
+                loadConsultancyContent();
+            }
+        }
+
+        // Load community posts
+        function loadCommunityContent() {
+            const postsContainer = document.getElementById('communityPosts');
+            let html = '';
+            
+            communityPosts.forEach(post => {
+                html += `
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="user-avatar">${post.avatar}</div>
+                            <div>
+                                <div class="post-meta">
+                                    <strong>${post.user}</strong> • ${post.time}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-content">${post.content}</div>
+                        <div class="post-actions">
+                            <span onclick="likePost(${post.id})">👍 ${post.likes}</span>
+                            <span onclick="replyToPost(${post.id})">💬 ${post.replies}</span>
+                            <span onclick="sharePost(${post.id})">📤 Share</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            postsContainer.innerHTML = html;
+        }
+
+        // Load consultancy options
+        function loadConsultancyContent() {
+            const consultancyContainer = document.getElementById('consultancyOptions');
+            let html = '';
+            
+            consultants.forEach(consultant => {
+                const statusColor = consultant.available ? '#4CAF50' : '#f44336';
+                const statusText = consultant.available ? 'Available' : 'Busy';
+                
+                html += `
+                    <div class="consultant-card">
+                        <div class="consultant-header">
+                            <div class="consultant-name">${consultant.name}</div>
+                            <div class="consultant-price">${consultant.price}</div>
+                        </div>
+                        <div class="consultant-speciality">${consultant.speciality}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0;">
+                            <div>${consultant.rating} (${consultant.experience})</div>
+                            <div style="color: ${statusColor}; font-weight: bold; font-size: 0.9rem;">${statusText}</div>
+                        </div>
+                        <button class="book-btn" onclick="bookConsultation(${consultant.id})" ${!consultant.available ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : ''}>
+                            ${consultant.available ? '📅 Book Consultation' : '⏰ Join Waitlist'}
+                        </button>
+                    </div>
+                `;
+            });
+            
+            consultancyContainer.innerHTML = html;
+        }
+
+        // Create new post
+        function createPost() {
+            const postText = document.getElementById('postText').value.trim();
+            if (!postText) {
+                alert('Please write something to post!');
+                return;
+            }
+            
+            // Add new post to the beginning of the array
+            const newPost = {
+                id: Date.now(),
+                user: "You",
+                avatar: "Y",
+                content: postText,
+                likes: 0,
+                replies: 0,
+                time: "Just now"
+            };
+            
+            communityPosts.unshift(newPost);
+            document.getElementById('postText').value = '';
+            loadCommunityContent();
+            
+            // Show success message
+            showNotification('Post shared successfully! 🎉');
+        }
+
+        // Like post
+        function likePost(postId) {
+            const post = communityPosts.find(p => p.id === postId);
+            if (post) {
+                post.likes++;
+                loadCommunityContent();
+                showNotification('Post liked! 👍');
+            }
+        }
+
+        // Reply to post
+        function replyToPost(postId) {
+            const reply = prompt('Write your reply:');
+            if (reply && reply.trim()) {
+                const post = communityPosts.find(p => p.id === postId);
+                if (post) {
+                    post.replies++;
+                    loadCommunityContent();
+                    showNotification('Reply posted! 💬');
+                }
+            }
+        }
+
+        // Share post
+        function sharePost(postId) {
+            showNotification('Post link copied to clipboard! 📤');
+        }
+
+        // Book consultation
+        function bookConsultation(consultantId) {
+            const consultant = consultants.find(c => c.id === consultantId);
+            if (consultant) {
+                if (consultant.available) {
+                    // Simulate booking process
+                    const confirmBooking = confirm(`Book consultation with ${consultant.name}?\n\nSpeciality: ${consultant.speciality}\nPrice: ${consultant.price}\n\nThis will redirect you to payment.`);
+                    
+                    if (confirmBooking) {
+                        showNotification(`Consultation booked with ${consultant.name}! 📅\nYou'll receive a confirmation email shortly.`);
+                        consultant.available = false;
+                        loadConsultancyContent();
+                    }
+                } else {
+                    showNotification(`Added to waitlist for ${consultant.name} ⏰\nWe'll notify you when they're available.`);
+                }
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create temporary notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #4CAF50, #45a049);
+                color: white;
+                padding: 1rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize community when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCommunityContent();
+        });
