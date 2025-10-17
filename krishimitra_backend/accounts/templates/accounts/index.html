@@ -102,19 +102,19 @@
             <div class="container">
                 <div class="stats-grid animate-on-scroll">
                     <div class="stat-item">
-                        <span class="stat-number" data-count="10000">0</span>
+                        <span class="stat-number" data-count="10000">1000</span>
                         <span class="stat-label">Happy Farmers</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-count="500">0</span>
+                        <span class="stat-number" data-count="500">500</span>
                         <span class="stat-label">Crop Varieties</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-count="95">0</span>
+                        <span class="stat-number" data-count="95">80</span>
                         <span class="stat-label">Accuracy Rate</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-count="25">0</span>
+                        <span class="stat-number" data-count="25">10</span>
                         <span class="stat-label">States Covered</span>
                     </div>
                 </div>
@@ -340,38 +340,169 @@
                 </div>
             </div>
         </section>
+  <!-- Weather Section  -->
+<section id="weather" class="weather-section">
+    <div class="container">
+        <div class="weather-widget animate-on-scroll">
+            <!-- Header -->
+            <div class="weather-header-title">
+                <h2>
+                    <span class="material-symbols-outlined">partly_cloudy_day</span>
+                    Weather Forecast & Agricultural Insights
+                </h2>
+                <p>Real-time weather data to optimize your farming decisions</p>
+            </div>
 
-        <section id="weather" class="weather-section">
-            <div class="container">
-                <div class="weather-widget animate-on-scroll">
-                    <h2>🌤 Weather Forecast & Agricultural Insights</h2>
-                    <p>Real-time weather data to optimize your farming decisions</p>
-                    <div class="weather-grid" id="weatherGrid">
-                        <div class="weather-item">
-                            <span class="weather-value" id="temperature-val">28°C</span>
-                            <span>Temperature</span>
+            <!-- Main Weather Container -->
+            <div class="weather-container">
+                <!-- Main Weather Card -->
+                <div class="main-weather-card">
+                    <div class="current-location">
+                        <span class="material-symbols-outlined">location_on</span>
+                        <span>Meenambakkam, Tamil Nadu</span>
+                    </div>
+
+                    <div class="main-temp-display">
+                        <div class="temp-section">
+                            <span class="temp-value-main" id="temperature-val">28</span>
+                            <span class="temp-unit">°C</span>
                         </div>
-                        <div class="weather-item">
-                            <span class="weather-value" id="humidity-val">65%</span>
-                            <span>Humidity</span>
+                        <span class="material-symbols-outlined weather-icon-main">wb_sunny</span>
+                    </div>
+
+                    <div class="weather-description">Partly Cloudy</div>
+                    <div class="feels-like">Feels like 30°C</div>
+
+                    <div class="weather-stats-grid">
+                        <div class="weather-stat-item">
+                            <span class="material-symbols-outlined stat-icon-weather">humidity_percentage</span>
+                            <div class="stat-info-weather">
+                                <span class="stat-label-weather">Humidity</span>
+                                <span class="stat-value-weather" id="humidity-val">65%</span>
+                            </div>
                         </div>
-                        <div class="weather-item">
-                            <span class="weather-value" id="rainfall-val">30%</span>
-                            <span>Rainfall Chance</span>
+
+                        <div class="weather-stat-item">
+                            <span class="material-symbols-outlined stat-icon-weather">rainy</span>
+                            <div class="stat-info-weather">
+                                <span class="stat-label-weather">Rain Chance</span>
+                                <span class="stat-value-weather" id="rainfall-val">30%</span>
+                            </div>
                         </div>
-                        <div class="weather-item">
-                            <span class="weather-value" id="wind-val">12 km/h</span>
-                            <span>Wind Speed</span>
+
+                        <div class="weather-stat-item">
+                            <span class="material-symbols-outlined stat-icon-weather">air</span>
+                            <div class="stat-info-weather">
+                                <span class="stat-label-weather">Wind Speed</span>
+                                <span class="stat-value-weather" id="wind-val">12 km/h</span>
+                            </div>
+                        </div>
+
+                        <div class="weather-stat-item">
+                            <span class="material-symbols-outlined stat-icon-weather">compress</span>
+                            <div class="stat-info-weather">
+                                <span class="stat-label-weather">Pressure</span>
+                                <span class="stat-value-weather">1013 hPa</span>
+                            </div>
                         </div>
                     </div>
-                    <button onclick="updateWeather()" class="cta-button" style="margin-top: 2rem;"> Update
-                        Weather</button>
+                </div>
 
-                    <button onclick="updatesevenWeather()" class="cta-button" style="margin-top: 2rem;"> Next 7 days
-                        forecast</button>
+                <!-- Side Cards -->
+                <div class="side-weather-cards">
+                    <div class="weather-info-card">
+                        <div class="info-card-header">
+                            <span class="material-symbols-outlined">agriculture</span>
+                            <span>Farming Conditions</span>
+                        </div>
+                        <div class="info-card-content">
+                            Perfect weather for irrigation today. Consider watering crops in the morning hours for best results.
+                        </div>
+                    </div>
+
+                    <div class="weather-info-card">
+                        <div class="info-card-header">
+                            <span class="material-symbols-outlined">eco</span>
+                            <span>Air Quality</span>
+                        </div>
+                        <div class="info-card-content">
+                            Air quality is good today. Suitable for all outdoor farming activities.
+                            <div class="air-quality-badge">AQI: 42 - Good</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+
+            <!-- 7-Day Forecast -->
+            <div class="forecast-section">
+                <h3 class="forecast-title">7-Day Weather Forecast</h3>
+                <div class="forecast-cards">
+                    <div class="forecast-card">
+                        <div class="forecast-day">Monday</div>
+                        <span class="material-symbols-outlined forecast-icon">wb_sunny</span>
+                        <div class="forecast-temp">32°C</div>
+                        <div class="forecast-condition">Sunny</div>
+                    </div>
+
+                    <div class="forecast-card">
+                        <div class="forecast-day">Tuesday</div>
+                        <span class="material-symbols-outlined forecast-icon">partly_cloudy_day</span>
+                        <div class="forecast-temp">30°C</div>
+                        <div class="forecast-condition">Partly Cloudy</div>
+                    </div>
+
+                    <div class="forecast-card">
+                        <div class="forecast-day">Wednesday</div>
+                        <span class="material-symbols-outlined forecast-icon">cloud</span>
+                        <div class="forecast-temp">28°C</div>
+                        <div class="forecast-condition">Cloudy</div>
+                    </div>
+
+                    <div class="forecast-card">
+                        <div class="forecast-day">Thursday</div>
+                        <span class="material-symbols-outlined forecast-icon">rainy</span>
+                        <div class="forecast-temp">26°C</div>
+                        <div class="forecast-condition">Rainy</div>
+                    </div>
+
+                    <div class="forecast-card">
+                        <div class="forecast-day">Friday</div>
+                        <span class="material-symbols-outlined forecast-icon">thunderstorm</span>
+                        <div class="forecast-temp">25°C</div>
+                        <div class="forecast-condition">Storms</div>
+                    </div>
+
+                    <div class="forecast-card">
+                        <div class="forecast-day">Saturday</div>
+                        <span class="material-symbols-outlined forecast-icon">partly_cloudy_day</span>
+                        <div class="forecast-temp">27°C</div>
+                        <div class="forecast-condition">Clearing</div>
+                    </div>
+
+                    <div class="forecast-card">
+                        <div class="forecast-day">Sunday</div>
+                        <span class="material-symbols-outlined forecast-icon">wb_sunny</span>
+                        <div class="forecast-temp">29°C</div>
+                        <div class="forecast-condition">Sunny</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="weather-actions">
+                <button onclick="updateWeather()" class="weather-btn">
+                    <span class="material-symbols-outlined">refresh</span>
+                    Update Weather
+                </button>
+                <button onclick="updatesevenWeather()" class="weather-btn">
+                    <span class="material-symbols-outlined">calendar_month</span>
+                    7-Day Forecast
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
 
         <section id="market" class="market-section">
             <div class="container">
@@ -432,14 +563,14 @@
                 </div>
                 <div class="footer-section">
                     <h3>📞 Connect With Us</h3>
-                    <a href="mailto:info@KrishiMitra.ai">📧 info@krishigrow.ai</a>
+                    <a href="mailto:info@Krishigrow.ai">📧 info@krishigrow.ai</a>
                     <a href="tel:+911234567890">📱 +91-1234567890</a>
                     <a href="#">🏢 Bangalore, India</a>
                     <a href="#">💬 Live Chat Support</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 KrishiGrowAI. All rights reserved. | Made with ❤ for Hackathon 🏆</p>
+                <p>&copy; 2025 KrishiGrowAI. All rights reserved. | Made with ❤ for Hackathon 🏆</p>
                 <p>Empowering Agriculture Through Technology</p>
             </div>
         </div>

@@ -655,31 +655,655 @@ function getSuccessRating(status) {
     return `${colors[status] || '🟡'} ${status}`;
 }
 
-// Weather update function
-function updateWeather() {
-    const weatherData = generateRandomWeather();
+// ============================================
+// IMPROVED WEATHER FUNCTIONS WITH LOCATION CHANGE
+// script.js e add koro ba replace koro
+// ============================================
 
-    document.getElementById('temperature-val').textContent = `${weatherData.temperature}°C`;
-    document.getElementById('humidity-val').textContent = `${weatherData.humidity}%`;
-    document.getElementById('rainfall-val').textContent = `${weatherData.rainfall}%`;
-    document.getElementById('wind-val').textContent = `${weatherData.windSpeed} km / h`;
+// Indian Cities with coordinates
+const indianCities = [
+    { name: 'Meenambakkam, Tamil Nadu', state: 'Tamil Nadu', lat: 12.99, lon: 80.18 },
+    { name: 'Mumbai, Maharashtra', state: 'Maharashtra', lat: 19.08, lon: 72.88 },
+    { name: 'Delhi, NCR', state: 'Delhi', lat: 28.61, lon: 77.23 },
+    { name: 'Bangalore, Karnataka', state: 'Karnataka', lat: 12.97, lon: 77.59 },
+    { name: 'Kolkata, West Bengal', state: 'West Bengal', lat: 22.57, lon: 88.36 },
+    { name: 'Hyderabad, Telangana', state: 'Telangana', lat: 17.39, lon: 78.49 },
+    { name: 'Chennai, Tamil Nadu', state: 'Tamil Nadu', lat: 13.09, lon: 80.28 },
+    { name: 'Pune, Maharashtra', state: 'Maharashtra', lat: 18.52, lon: 73.86 },
+    { name: 'Ahmedabad, Gujarat', state: 'Gujarat', lat: 23.03, lon: 72.59 },
+    { name: 'Jaipur, Rajasthan', state: 'Rajasthan', lat: 26.91, lon: 75.79 },
+    { name: 'Lucknow, Uttar Pradesh', state: 'Uttar Pradesh', lat: 26.85, lon: 80.95 },
+    { name: 'Bhopal, Madhya Pradesh', state: 'Madhya Pradesh', lat: 23.26, lon: 77.41 },
+    { name: 'Patna, Bihar', state: 'Bihar', lat: 25.59, lon: 85.14 },
+    { name: 'Chandigarh, Punjab', state: 'Punjab', lat: 30.73, lon: 76.78 }
+];
 
-    // Add some visual feedback
-    const button = event?.target;
-    if (button) {
-        const originalText = button.innerHTML;
-        button.innerHTML = '🔄 Updating...';
-        button.disabled = true;
+// Current location
+let currentLocation = indianCities[0];
 
-        setTimeout(() => {
-            button.innerHTML = '✅ Updated!';
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.disabled = false;
-            }, 1000);
-        }, 1500);
+// Weather data with more realistic values
+const weatherConditions = [
+    { 
+        condition: 'Sunny', 
+        icon: 'wb_sunny', 
+        tempRange: [28, 35], 
+        humidityRange: [40, 60],
+        rainChance: [0, 10],
+        description: 'Clear skies, perfect for farming activities'
+    },
+    { 
+        condition: 'Partly Cloudy', 
+        icon: 'partly_cloudy_day', 
+        tempRange: [25, 32], 
+        humidityRange: [50, 70],
+        rainChance: [10, 30],
+        description: 'Mix of sun and clouds, good farming weather'
+    },
+    { 
+        condition: 'Cloudy', 
+        icon: 'cloud', 
+        tempRange: [22, 28], 
+        humidityRange: [60, 80],
+        rainChance: [30, 50],
+        description: 'Overcast skies, suitable for planting'
+    },
+    { 
+        condition: 'Rainy', 
+        icon: 'rainy', 
+        tempRange: [20, 26], 
+        humidityRange: [75, 95],
+        rainChance: [60, 90],
+        description: 'Rainfall expected, good for irrigation needs'
+    }
+];
+
+const farmingAdvice = {
+    sunny: "Perfect day for harvesting and drying crops. Apply pesticides in early morning.",
+    partlyCloudy: "Good conditions for most farming activities. Monitor soil moisture levels.",
+    cloudy: "Ideal for transplanting seedlings. Plants won't face heat stress.",
+    rainy: "Avoid heavy machinery. Check drainage systems. Good for rain-fed crops."
+};
+
+const airQualityLevels = [
+    { range: [0, 50], label: 'Good', color: '#4CAF50', advice: 'Excellent air quality for all farming activities' },
+    { range: [51, 100], label: 'Moderate', color: '#FFC107', advice: 'Acceptable air quality for outdoor work' },
+    { range: [101, 150], label: 'Unhealthy', color: '#FF5722', advice: 'Sensitive individuals should limit prolonged outdoor work' }
+];
+
+// Generate realistic weather data
+function generateWeatherData() {
+    const weatherType = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+    
+    const temp = Math.floor(Math.random() * (weatherType.tempRange[1] - weatherType.tempRange[0] + 1)) + weatherType.tempRange[0];
+    const humidity = Math.floor(Math.random() * (weatherType.humidityRange[1] - weatherType.humidityRange[0] + 1)) + weatherType.humidityRange[0];
+    const rainChance = Math.floor(Math.random() * (weatherType.rainChance[1] - weatherType.rainChance[0] + 1)) + weatherType.rainChance[0];
+    const windSpeed = Math.floor(Math.random() * 20) + 5;
+    const pressure = Math.floor(Math.random() * 30) + 1000;
+    const feelsLike = temp + Math.floor(Math.random() * 5) - 2;
+    
+    // AQI
+    const aqi = Math.floor(Math.random() * 120) + 10;
+    const aqiData = airQualityLevels.find(level => aqi >= level.range[0] && aqi <= level.range[1]);
+    
+    return {
+        temperature: temp,
+        feelsLike: feelsLike,
+        humidity: humidity,
+        rainfall: rainChance,
+        windSpeed: windSpeed,
+        pressure: pressure,
+        condition: weatherType.condition,
+        icon: weatherType.icon,
+        description: weatherType.description,
+        aqi: aqi,
+        aqiLabel: aqiData.label,
+        aqiColor: aqiData.color,
+        aqiAdvice: aqiData.advice,
+        advice: getFarmingAdvice(weatherType.condition)
+    };
+}
+
+function getFarmingAdvice(condition) {
+    const key = condition.toLowerCase().replace(' ', '');
+    return farmingAdvice[key] || "Monitor weather conditions regularly for optimal farming.";
+}
+
+// Show location change modal
+function changeLocation() {
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'location-modal';
+    modal.innerHTML = `
+        <div class="location-modal-content">
+            <div class="location-modal-header">
+                <h3>
+                    <span class="material-symbols-outlined">location_on</span>
+                    Select Your Location
+                </h3>
+                <button class="close-modal" onclick="closeLocationModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="location-search">
+                <input type="text" id="locationSearch" placeholder="Search city or state..." />
+                <span class="material-symbols-outlined">search</span>
+            </div>
+            <div class="location-list" id="locationList">
+                ${indianCities.map((city, index) => `
+                    <div class="location-item ${city.name === currentLocation.name ? 'active' : ''}" onclick="selectLocation(${index})">
+                        <span class="material-symbols-outlined">location_city</span>
+                        <div class="location-info">
+                            <div class="location-name">${city.name}</div>
+                            <div class="location-state">${city.state}</div>
+                        </div>
+                        ${city.name === currentLocation.name ? '<span class="material-symbols-outlined check-icon">check_circle</span>' : ''}
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Add event listener for search
+    setTimeout(() => {
+        const searchInput = document.getElementById('locationSearch');
+        searchInput.focus();
+        searchInput.addEventListener('input', filterLocations);
+    }, 100);
+    
+    // Animate modal
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+// Filter locations based on search
+function filterLocations() {
+    const searchTerm = document.getElementById('locationSearch').value.toLowerCase();
+    const locationList = document.getElementById('locationList');
+    
+    const filteredCities = indianCities.filter(city => 
+        city.name.toLowerCase().includes(searchTerm) || 
+        city.state.toLowerCase().includes(searchTerm)
+    );
+    
+    locationList.innerHTML = filteredCities.map((city, index) => {
+        const originalIndex = indianCities.findIndex(c => c.name === city.name);
+        return `
+            <div class="location-item ${city.name === currentLocation.name ? 'active' : ''}" onclick="selectLocation(${originalIndex})">
+                <span class="material-symbols-outlined">location_city</span>
+                <div class="location-info">
+                    <div class="location-name">${city.name}</div>
+                    <div class="location-state">${city.state}</div>
+                </div>
+                ${city.name === currentLocation.name ? '<span class="material-symbols-outlined check-icon">check_circle</span>' : ''}
+            </div>
+        `;
+    }).join('');
+}
+
+// Select location
+function selectLocation(index) {
+    currentLocation = indianCities[index];
+    
+    // Update location display
+    const locationDisplay = document.querySelector('.current-location span:last-child');
+    if (locationDisplay) {
+        locationDisplay.textContent = currentLocation.name;
+    }
+    
+    // Close modal
+    closeLocationModal();
+    
+    // Update weather for new location
+    setTimeout(() => {
+        showWeatherNotification(`Location changed to ${currentLocation.name}! 📍`, 'success');
+        updateWeather();
+    }, 300);
+}
+
+// Close location modal
+function closeLocationModal() {
+    const modal = document.querySelector('.location-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 300);
     }
 }
+
+// Update weather with animation
+function updateWeather() {
+    const button = event?.target;
+    
+    // Show loading state
+    if (button) {
+        button.disabled = true;
+        button.innerHTML = '<span class="material-symbols-outlined" style="animation: spin 1s linear infinite;">refresh</span> Updating...';
+    }
+    
+    setTimeout(() => {
+        const weather = generateWeatherData();
+        
+        // Update temperature with animation
+        animateValue('temperature-val', parseInt(document.getElementById('temperature-val').textContent), weather.temperature, 1000);
+        
+        // Update other values
+        document.getElementById('humidity-val').textContent = weather.humidity + '%';
+        document.getElementById('rainfall-val').textContent = weather.rainfall + '%';
+        document.getElementById('wind-val').textContent = weather.windSpeed + ' km/h';
+        
+        // Update pressure if element exists
+        const pressureEl = document.querySelectorAll('.stat-value-weather')[3];
+        if (pressureEl) {
+            pressureEl.textContent = weather.pressure + ' hPa';
+        }
+        
+        // Update weather icon and description
+        const weatherIcon = document.querySelector('.weather-icon-main');
+        if (weatherIcon) {
+            weatherIcon.textContent = weather.icon;
+            weatherIcon.style.animation = 'bounce 0.6s ease';
+            setTimeout(() => weatherIcon.style.animation = '', 600);
+        }
+        
+        const weatherDesc = document.querySelector('.weather-description');
+        if (weatherDesc) {
+            weatherDesc.textContent = weather.condition;
+        }
+        
+        const feelsLike = document.querySelector('.feels-like');
+        if (feelsLike) {
+            feelsLike.textContent = `Feels like ${weather.feelsLike}°C`;
+        }
+        
+        // Update farming advice
+        const farmingCard = document.querySelector('.weather-info-card .info-card-content');
+        if (farmingCard) {
+            farmingCard.textContent = weather.advice;
+        }
+        
+        // Update air quality
+        const aqiCards = document.querySelectorAll('.weather-info-card');
+        if (aqiCards.length > 1) {
+            const aqiCard = aqiCards[1];
+            const aqiContent = aqiCard.querySelector('.info-card-content');
+            
+            if (aqiContent) {
+                aqiContent.innerHTML = `${weather.aqiAdvice}<div class="air-quality-badge" style="background: ${weather.aqiColor};">AQI: ${weather.aqi} - ${weather.aqiLabel}</div>`;
+            }
+        }
+        
+        // Success state
+        if (button) {
+            button.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Updated!';
+            button.style.background = 'linear-gradient(135deg, #4CAF50, #66BB6A)';
+            
+            setTimeout(() => {
+                button.innerHTML = '<span class="material-symbols-outlined">refresh</span> Update Weather';
+                button.style.background = '';
+                button.disabled = false;
+            }, 2000);
+        }
+        
+        // Show success notification
+        showWeatherNotification('Weather data updated successfully! 🌤️', 'success');
+        
+    }, 1500);
+}
+
+// Animate number changes
+function animateValue(id, start, end, duration) {
+    const element = document.getElementById(id);
+    if (!element) return;
+    
+    const range = end - start;
+    const increment = range / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+            current = end;
+            clearInterval(timer);
+        }
+        element.textContent = Math.round(current);
+    }, 16);
+}
+
+// Generate 7-day forecast
+function updatesevenWeather() {
+    const button = event?.target;
+    
+    if (button) {
+        button.disabled = true;
+        button.innerHTML = '<span class="material-symbols-outlined" style="animation: spin 1s linear infinite;">refresh</span> Loading...';
+    }
+    
+    setTimeout(() => {
+        const forecastCards = document.querySelectorAll('.forecast-card');
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        
+        forecastCards.forEach((card, index) => {
+            const weatherType = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+            const temp = Math.floor(Math.random() * (weatherType.tempRange[1] - weatherType.tempRange[0] + 1)) + weatherType.tempRange[0];
+            
+            // Add animation
+            card.style.animation = 'none';
+            setTimeout(() => {
+                card.style.animation = 'fadeInUp 0.5s ease forwards';
+                card.style.animationDelay = `${index * 0.1}s`;
+            }, 10);
+            
+            card.querySelector('.forecast-day').textContent = days[index];
+            card.querySelector('.forecast-icon').textContent = weatherType.icon;
+            card.querySelector('.forecast-temp').textContent = temp + '°C';
+            card.querySelector('.forecast-condition').textContent = weatherType.condition;
+        });
+        
+        if (button) {
+            button.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Updated!';
+            button.style.background = 'linear-gradient(135deg, #4CAF50, #66BB6A)';
+            
+            setTimeout(() => {
+                button.innerHTML = '<span class="material-symbols-outlined">calendar_month</span> 7-Day Forecast';
+                button.style.background = '';
+                button.disabled = false;
+            }, 2000);
+        }
+        
+        showWeatherNotification('7-day forecast updated! 📅', 'success');
+        
+    }, 1500);
+}
+
+// Show notification
+function showWeatherNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? 'linear-gradient(135deg, #4CAF50, #66BB6A)' : 'linear-gradient(135deg, #f44336, #e57373)'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-weight: 500;
+        animation: slideInRight 0.4s ease-out;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.4s ease-out';
+        setTimeout(() => notification.remove(), 400);
+    }, 3000);
+}
+
+// Add CSS for location modal and animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+    
+    @keyframes slideInRight {
+        from { 
+            opacity: 0;
+            transform: translateX(100px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes slideOutRight {
+        from { 
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to { 
+            opacity: 0;
+            transform: translateX(100px);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Location Modal Styles */
+    .location-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .location-modal.show {
+        opacity: 1;
+    }
+    
+    .location-modal-content {
+        background: white;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+    }
+    
+    .location-modal.show .location-modal-content {
+        transform: scale(1);
+    }
+    
+    .location-modal-header {
+        background: linear-gradient(135deg, var(--primary-green), var(--success-green));
+        color: white;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .location-modal-header h3 {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.3rem;
+    }
+    
+    .close-modal {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+    }
+    
+    .close-modal:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .location-search {
+        padding: 1.5rem;
+        border-bottom: 1px solid #E0E0E0;
+        position: relative;
+    }
+    
+    .location-search input {
+        width: 100%;
+        padding: 0.8rem 2.5rem 0.8rem 1rem;
+        border: 2px solid var(--neutral-gray-lighter);
+        border-radius: 12px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+    
+    .location-search input:focus {
+        border-color: var(--primary-green);
+    }
+    
+    .location-search .material-symbols-outlined {
+        position: absolute;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+    }
+    
+    .location-list {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .location-list::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .location-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    .location-list::-webkit-scrollbar-thumb {
+        background: var(--primary-green);
+        border-radius: 3px;
+    }
+    
+    .location-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    
+    .location-item:hover {
+        background: linear-gradient(135deg, #F1F8E9, #E8F5E9);
+    }
+    
+    .location-item.active {
+        background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+    }
+    
+    .location-item .material-symbols-outlined:first-child {
+        color: var(--accent-orange);
+        font-size: 1.8rem;
+    }
+    
+    .location-info {
+        flex: 1;
+    }
+    
+    .location-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 2px;
+    }
+    
+    .location-state {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    
+    .check-icon {
+        color: var(--success-green);
+        font-size: 1.5rem;
+    }
+    
+    .current-location {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 8px 12px;
+        border-radius: 10px;
+    }
+    
+    .current-location:hover {
+        background: rgba(245, 124, 0, 0.1);
+    }
+    
+    @media (max-width: 768px) {
+        .location-modal-content {
+            width: 95%;
+            max-height: 90vh;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Initialize weather on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Set initial weather
+    const initialWeather = generateWeatherData();
+    
+    document.getElementById('temperature-val').textContent = initialWeather.temperature;
+    document.getElementById('humidity-val').textContent = initialWeather.humidity + '%';
+    document.getElementById('rainfall-val').textContent = initialWeather.rainfall + '%';
+    document.getElementById('wind-val').textContent = initialWeather.windSpeed + ' km/h';
+    
+    // Update weather icon
+    const weatherIcon = document.querySelector('.weather-icon-main');
+    if (weatherIcon) {
+        weatherIcon.textContent = initialWeather.icon;
+    }
+    
+    const weatherDesc = document.querySelector('.weather-description');
+    if (weatherDesc) {
+        weatherDesc.textContent = initialWeather.condition;
+    }
+    
+    const feelsLike = document.querySelector('.feels-like');
+    if (feelsLike) {
+        feelsLike.textContent = `Feels like ${initialWeather.feelsLike}°C`;
+    }
+    
+    // Make location clickable
+    const locationDisplay = document.querySelector('.current-location');
+    if (locationDisplay) {
+        locationDisplay.onclick = changeLocation;
+        locationDisplay.style.cursor = 'pointer';
+        locationDisplay.title = 'Click to change location';
+    }
+    
+    console.log('✅ Weather system with location change initialized successfully!');
+});
 
 // Generate random weather data (simulating API call)
 function generateRandomWeather() {
