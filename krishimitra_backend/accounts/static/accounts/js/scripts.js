@@ -1812,3 +1812,823 @@ window.addEventListener('load', function () {
         document.addEventListener('DOMContentLoaded', function() {
             loadCommunityContent();
         });
+
+        // ============================================
+// MODERN MARKET PRICE SECTION JAVASCRIPT
+// Add this to script.js
+// ============================================
+
+// Enhanced Market Data with more details
+const marketDataEnhanced = [
+    { 
+        id: 1,
+        crop: 'Wheat', 
+        variety: 'Durum',
+        icon: '🌾',
+        price: 2150, 
+        trend: 'up', 
+        change: 5, 
+        market: 'Delhi', 
+        state: 'Delhi',
+        minPrice: 2000,
+        maxPrice: 2300,
+        volume: '2500 quintals',
+        quality: 'Grade A',
+        updated: new Date() 
+    },
+    { 
+        id: 2,
+        crop: 'Rice', 
+        variety: 'Basmati',
+        icon: '🌾',
+        price: 1890, 
+        trend: 'down', 
+        change: -2, 
+        market: 'Amritsar', 
+        state: 'Punjab',
+        minPrice: 1800,
+        maxPrice: 2000,
+        volume: '3200 quintals',
+        quality: 'Grade A',
+        updated: new Date() 
+    },
+    { 
+        id: 3,
+        crop: 'Cotton', 
+        variety: 'Medium Staple',
+        icon: '🌱',
+        price: 5200, 
+        trend: 'up', 
+        change: 8, 
+        market: 'Rajkot', 
+        state: 'Gujarat',
+        minPrice: 4800,
+        maxPrice: 5500,
+        volume: '1800 quintals',
+        quality: 'Grade B',
+        updated: new Date() 
+    },
+    { 
+        id: 4,
+        crop: 'Sugarcane', 
+        variety: 'Co 0238',
+        icon: '🎋',
+        price: 340, 
+        trend: 'stable', 
+        change: 0, 
+        market: 'Lucknow', 
+        state: 'UP',
+        minPrice: 320,
+        maxPrice: 360,
+        volume: '5000 quintals',
+        quality: 'Fresh',
+        updated: new Date() 
+    },
+    { 
+        id: 5,
+        crop: 'Maize', 
+        variety: 'Hybrid',
+        icon: '🌽',
+        price: 1750, 
+        trend: 'up', 
+        change: 3, 
+        market: 'Belgaum', 
+        state: 'Karnataka',
+        minPrice: 1650,
+        maxPrice: 1850,
+        volume: '2100 quintals',
+        quality: 'Grade A',
+        updated: new Date() 
+    },
+    { 
+        id: 6,
+        crop: 'Soybean', 
+        variety: 'JS 95-60',
+        icon: '🫘',
+        price: 4200, 
+        trend: 'up', 
+        change: 6, 
+        market: 'Indore', 
+        state: 'MP',
+        minPrice: 3900,
+        maxPrice: 4400,
+        volume: '1900 quintals',
+        quality: 'Grade A',
+        updated: new Date() 
+    },
+    { 
+        id: 7,
+        crop: 'Tomato', 
+        variety: 'Hybrid',
+        icon: '🍅',
+        price: 2800, 
+        trend: 'down', 
+        change: -12, 
+        market: 'Pune', 
+        state: 'Maharashtra',
+        minPrice: 2500,
+        maxPrice: 3200,
+        volume: '800 quintals',
+        quality: 'Fresh',
+        updated: new Date() 
+    },
+    { 
+        id: 8,
+        crop: 'Onion', 
+        variety: 'Red Onion',
+        icon: '🧅',
+        price: 3500, 
+        trend: 'up', 
+        change: 15, 
+        market: 'Nashik', 
+        state: 'Maharashtra',
+        minPrice: 3000,
+        maxPrice: 4000,
+        volume: '4200 quintals',
+        quality: 'Grade A',
+        updated: new Date() 
+    },
+    { 
+        id: 9,
+        crop: 'Potato', 
+        variety: 'Kufri Jyoti',
+        icon: '🥔',
+        price: 2200, 
+        trend: 'stable', 
+        change: 1, 
+        market: 'Agra', 
+        state: 'UP',
+        minPrice: 2100,
+        maxPrice: 2400,
+        volume: '3500 quintals',
+        quality: 'Grade A',
+        updated: new Date() 
+    },
+    { 
+        id: 10,
+        crop: 'Chickpea', 
+        variety: 'Kabuli',
+        icon: '🫘',
+        price: 4800, 
+        trend: 'up', 
+        change: 4, 
+        market: 'Jaipur', 
+        state: 'Rajasthan',
+        minPrice: 4500,
+        maxPrice: 5100,
+        volume: '1600 quintals',
+        quality: 'Grade A',
+        updated: new Date() 
+    },
+    { 
+        id: 11,
+        crop: 'Groundnut', 
+        variety: 'Bold',
+        icon: '🥜',
+        price: 5000, 
+        trend: 'down', 
+        change: -3, 
+        market: 'Rajkot', 
+        state: 'Gujarat',
+        minPrice: 4700,
+        maxPrice: 5300,
+        volume: '1400 quintals',
+        quality: 'Grade A',
+        updated: new Date() 
+    },
+    { 
+        id: 12,
+        crop: 'Mustard', 
+        variety: 'Yellow',
+        icon: '🌼',
+        price: 4500, 
+        trend: 'stable', 
+        change: 0, 
+        market: 'Bharatpur', 
+        state: 'Rajasthan',
+        minPrice: 4300,
+        maxPrice: 4700,
+        volume: '1200 quintals',
+        quality: 'Grade B',
+        updated: new Date() 
+    }
+];
+
+let currentFilter = 'all';
+let filteredMarketData = [...marketDataEnhanced];
+
+// Initialize market section
+function initializeMarket() {
+    renderMarketCards();
+    updateMarketStats();
+}
+
+// Render market cards
+function renderMarketCards() {
+    const gridContainer = document.getElementById('marketGrid');
+    if (!gridContainer) return;
+
+    let html = '';
+
+    filteredMarketData.forEach(item => {
+        const trendIcon = {
+            'up': 'trending_up',
+            'down': 'trending_down',
+            'stable': 'horizontal_rule'
+        };
+
+        const trendClass = `trend-${item.trend}`;
+        
+        const changeText = item.change > 0 
+            ? `+${item.change}%` 
+            : item.change < 0 
+            ? `${item.change}%` 
+            : 'No change';
+
+        html += `
+            <div class="market-card" data-crop="${item.crop.toLowerCase()}" data-trend="${item.trend}" onclick="showCropDetails(${item.id})">
+                <div class="market-card-header">
+                    <div class="crop-info">
+                        <div class="crop-icon">${item.icon}</div>
+                        <div class="crop-details">
+                            <h3>${item.crop}</h3>
+                            <div class="crop-variety">${item.variety}</div>
+                        </div>
+                    </div>
+                    <div class="trend-badge ${trendClass}">
+                        <span class="material-symbols-outlined">${trendIcon[item.trend]}</span>
+                        ${changeText}
+                    </div>
+                </div>
+
+                <div class="price-section">
+                    <div class="current-price">₹${item.price.toLocaleString()}</div>
+                    <div class="price-unit">per quintal</div>
+                    <div class="price-change ${trendClass}">
+                        Range: ₹${item.minPrice} - ₹${item.maxPrice}
+                    </div>
+                </div>
+
+                <div class="market-details">
+                    <div class="detail-item">
+                        <div class="detail-label">📍 Market</div>
+                        <div class="detail-value">${item.market}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">📦 Volume</div>
+                        <div class="detail-value">${item.volume}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">⭐ Quality</div>
+                        <div class="detail-value">${item.quality}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">🕐 Updated</div>
+                        <div class="detail-value">${getTimeAgo(item.updated)}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    gridContainer.innerHTML = html;
+
+    // Add animation
+    setTimeout(() => {
+        const cards = document.querySelectorAll('.market-card');
+        cards.forEach((card, index) => {
+            card.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.05}s`;
+        });
+    }, 10);
+}
+
+// Update market stats
+function updateMarketStats() {
+    const totalCrops = marketDataEnhanced.length;
+    const uniqueMandis = [...new Set(marketDataEnhanced.map(item => item.market))].length;
+    const priceIncreases = marketDataEnhanced.filter(item => item.change > 0).length;
+
+    document.getElementById('totalCrops').textContent = totalCrops;
+    document.getElementById('totalMandis').textContent = uniqueMandis;
+    document.getElementById('priceIncreases').textContent = priceIncreases;
+}
+
+// Filter market by trend
+function filterMarket(type) {
+    currentFilter = type;
+
+    // Update button active state
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.closest('.filter-btn').classList.add('active');
+
+    // Filter data
+    if (type === 'all') {
+        filteredMarketData = [...marketDataEnhanced];
+    } else {
+        filteredMarketData = marketDataEnhanced.filter(item => item.trend === type);
+    }
+
+    renderMarketCards();
+    showMarketNotification(`Showing ${filteredMarketData.length} ${type === 'all' ? 'crops' : type + ' trend crops'}`, 'info');
+}
+
+// Search market
+function searchMarket() {
+    const searchTerm = document.getElementById('marketSearch').value.toLowerCase();
+
+    if (searchTerm === '') {
+        filteredMarketData = currentFilter === 'all' 
+            ? [...marketDataEnhanced] 
+            : marketDataEnhanced.filter(item => item.trend === currentFilter);
+    } else {
+        const baseData = currentFilter === 'all' 
+            ? marketDataEnhanced 
+            : marketDataEnhanced.filter(item => item.trend === currentFilter);
+
+        filteredMarketData = baseData.filter(item => 
+            item.crop.toLowerCase().includes(searchTerm) ||
+            item.market.toLowerCase().includes(searchTerm) ||
+            item.state.toLowerCase().includes(searchTerm) ||
+            item.variety.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    renderMarketCards();
+}
+
+// Refresh market prices
+function refreshMarketPrices() {
+    const button = event.target;
+    const originalHTML = button.innerHTML;
+
+    button.disabled = true;
+    button.innerHTML = '<span class="material-symbols-outlined" style="animation: spin 1s linear infinite;">refresh</span> Updating...';
+
+    setTimeout(() => {
+        // Update prices with random changes
+        marketDataEnhanced.forEach(item => {
+            const changePercent = (Math.random() - 0.5) * 0.15; // ±7.5%
+            const priceChange = Math.round(item.price * changePercent);
+            
+            item.price = Math.max(item.minPrice, Math.min(item.maxPrice, item.price + priceChange));
+            item.change = Math.round((priceChange / item.price) * 100);
+            
+            // Update trend
+            if (item.change > 2) {
+                item.trend = 'up';
+            } else if (item.change < -2) {
+                item.trend = 'down';
+            } else {
+                item.trend = 'stable';
+            }
+
+            item.updated = new Date();
+        });
+
+        // Re-filter based on current filter
+        if (currentFilter !== 'all') {
+            filteredMarketData = marketDataEnhanced.filter(item => item.trend === currentFilter);
+        } else {
+            filteredMarketData = [...marketDataEnhanced];
+        }
+
+        renderMarketCards();
+        updateMarketStats();
+
+        button.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Updated!';
+        button.style.background = 'linear-gradient(135deg, #4CAF50, #66BB6A)';
+
+        setTimeout(() => {
+            button.innerHTML = originalHTML;
+            button.style.background = '';
+            button.disabled = false;
+        }, 2000);
+
+        showMarketNotification('Market prices updated successfully! 📊', 'success');
+    }, 1500);
+}
+
+// Show crop details
+function showCropDetails(cropId) {
+    const crop = marketDataEnhanced.find(item => item.id === cropId);
+    if (!crop) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'crop-details-modal';
+    modal.innerHTML = `
+        <div class="crop-details-content">
+            <div class="crop-details-header">
+                <div>
+                    <h2>${crop.icon} ${crop.crop}</h2>
+                    <p>${crop.variety}</p>
+                </div>
+                <button class="close-modal" onclick="closeCropModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="crop-details-body">
+                <div class="detail-row">
+                    <div class="detail-col">
+                        <h3>Current Price</h3>
+                        <div class="big-price">₹${crop.price.toLocaleString()}</div>
+                        <div class="price-subtext">per quintal</div>
+                    </div>
+                    <div class="detail-col">
+                        <h3>Price Change</h3>
+                        <div class="big-change trend-${crop.trend}">
+                            ${crop.change > 0 ? '+' : ''}${crop.change}%
+                        </div>
+                        <div class="price-subtext">in last update</div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="material-symbols-outlined">location_on</span>
+                        <div>
+                            <strong>Market Location</strong>
+                            <p>${crop.market}, ${crop.state}</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="material-symbols-outlined">inventory_2</span>
+                        <div>
+                            <strong>Available Volume</strong>
+                            <p>${crop.volume}</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="material-symbols-outlined">star</span>
+                        <div>
+                            <strong>Quality Grade</strong>
+                            <p>${crop.quality}</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="material-symbols-outlined">sync</span>
+                        <div>
+                            <strong>Last Updated</strong>
+                            <p>${getTimeAgo(crop.updated)}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="price-range-info">
+                    <h3>Price Range (Today)</h3>
+                    <div class="range-bar">
+                        <div class="range-marker" style="left: ${((crop.price - crop.minPrice) / (crop.maxPrice - crop.minPrice)) * 100}%"></div>
+                    </div>
+                    <div class="range-labels">
+                        <span>Min: ₹${crop.minPrice}</span>
+                        <span>Max: ₹${crop.maxPrice}</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="modal-btn-primary" onclick="trackCrop(${crop.id})">
+                        <span class="material-symbols-outlined">notifications</span>
+                        Track Price
+                    </button>
+                    <button class="modal-btn-secondary" onclick="viewHistory(${crop.id})">
+                        <span class="material-symbols-outlined">history</span>
+                        View History
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+// Close crop modal
+function closeCropModal() {
+    const modal = document.querySelector('.crop-details-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 300);
+    }
+}
+
+// Toggle price chart
+function toggleChart() {
+    const chart = document.getElementById('priceChart');
+    chart.classList.toggle('active');
+    
+    if (chart.classList.contains('active')) {
+        showMarketNotification('Price trend chart displayed 📈', 'info');
+    }
+}
+
+// Export market data
+function exportMarketData() {
+    showMarketNotification('Exporting market data... 📥', 'info');
+    
+    setTimeout(() => {
+        // Create CSV data
+        let csv = 'Crop,Variety,Price (₹/quintal),Change %,Market,State,Quality,Volume\n';
+        
+        marketDataEnhanced.forEach(item => {
+            csv += `${item.crop},${item.variety},${item.price},${item.change}%,${item.market},${item.state},${item.quality},${item.volume}\n`;
+        });
+
+        // Create download link
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `market_prices_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        
+        showMarketNotification('Market data exported successfully! ✅', 'success');
+    }, 1000);
+}
+
+// Compare markets
+function compareMarkets() {
+    showMarketNotification('Market comparison feature coming soon! 🔄', 'info');
+}
+
+// Track crop
+function trackCrop(cropId) {
+    const crop = marketDataEnhanced.find(item => item.id === cropId);
+    showMarketNotification(`Now tracking ${crop.crop} prices! 🔔`, 'success');
+    closeCropModal();
+}
+
+// View history
+function viewHistory(cropId) {
+    const crop = marketDataEnhanced.find(item => item.id === cropId);
+    showMarketNotification(`Loading price history for ${crop.crop}... 📊`, 'info');
+}
+
+// Get time ago
+function getTimeAgo(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    
+    if (seconds < 60) return 'Just now';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
+}
+
+// Show market notification - ONLY CALLED FOR SUCCESS MESSAGES
+function showMarketNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    const bgColor = type === 'success' ? 'linear-gradient(135deg, #4CAF50, #66BB6A)' 
+                   : type === 'info' ? 'linear-gradient(135deg, #4CAF50, #66BB6A)'
+                   : 'linear-gradient(135deg, #f44336, #e57373)';
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${bgColor};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-weight: 500;
+        animation: slideInRight 0.4s ease-out;
+        max-width: 300px;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.4s ease-out';
+        setTimeout(() => notification.remove(), 400);
+    }, 3000);
+}
+// Add modal styles
+const marketModalStyles = document.createElement('style');
+marketModalStyles.textContent = `
+    .crop-details-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .crop-details-modal.show {
+        opacity: 1;
+    }
+
+    .crop-details-content {
+        background: white;
+        border-radius: 25px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+    }
+
+    .crop-details-modal.show .crop-details-content {
+        transform: scale(1);
+    }
+
+    .crop-details-header {
+        background: linear-gradient(135deg, var(--primary-green), var(--success-green));
+        color: white;
+        padding: 2rem;
+        border-radius: 25px 25px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .crop-details-header h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .crop-details-header p {
+        opacity: 0.9;
+        font-size: 1.1rem;
+    }
+
+    .crop-details-body {
+        padding: 2rem;
+    }
+
+    .detail-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .detail-col h3 {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+    }
+
+    .big-price {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary-green-dark);
+    }
+
+    .big-change {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    .price-subtext {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .info-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        background: linear-gradient(135deg, #F1F8E9, #E8F5E9);
+        border-radius: 12px;
+    }
+
+    .info-item .material-symbols-outlined {
+        font-size: 2rem;
+        color: var(--accent-orange);
+    }
+
+    .info-item strong {
+        display: block;
+        color: var(--primary-green-dark);
+        margin-bottom: 0.3rem;
+        font-size: 0.9rem;
+    }
+
+    .info-item p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+
+    .price-range-info {
+        background: linear-gradient(135deg, #F1F8E9, #E8F5E9);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+    }
+
+    .price-range-info h3 {
+        color: var(--primary-green-dark);
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .range-bar {
+        height: 8px;
+        background: #E0E0E0;
+        border-radius: 10px;
+        position: relative;
+        margin-bottom: 0.5rem;
+    }
+
+    .range-marker {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: var(--primary-green);
+        border-radius: 50%;
+        top: -4px;
+        transform: translateX(-50%);
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+    }
+
+    .range-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .modal-btn-primary,
+    .modal-btn-secondary {
+        flex: 1;
+        padding: 1rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .modal-btn-primary {
+        background: linear-gradient(135deg, var(--primary-green), var(--success-green));
+        color: white;
+    }
+
+    .modal-btn-secondary {
+        background: white;
+        color: var(--primary-green-dark);
+        border: 2px solid var(--primary-green);
+    }
+
+    .modal-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .modal-btn-secondary:hover {
+        background: var(--primary-green);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .detail-row,
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+`;
+document.head.appendChild(marketModalStyles);
+
+// Initialize market on page load
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('marketGrid')) {
+        initializeMarket();
+        console.log('✅ Modern market section initialized!');
+    }
+});

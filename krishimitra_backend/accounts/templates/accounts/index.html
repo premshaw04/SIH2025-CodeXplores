@@ -504,31 +504,126 @@
 </section>
 
 
-        <section id="market" class="market-section">
-            <div class="container">
-                <div class="market-prices animate-on-scroll">
-                    <h2>📈 Current Market Prices</h2>
-                    <div style="overflow-x: auto;">
-                        <table class="price-table" id="priceTable">
-                            <thead>
-                                <tr>
-                                    <th>🌾 Crop</th>
-                                    <th>💰 Current Price (₹/quintal)</th>
-                                    <th>📊 Trend</th>
-                                    <th>🏪 Market</th>
-                                    <th>📅 Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody id="priceTableBody">
-                                <!-- Market data will be populated here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <button onclick="updateMarketPrices()" class="cta-button" style="margin-top: 2rem;">Refresh
-                        Prices</button>
+        <!-- Replace your market section with this complete HTML -->
+<section id="market" class="market-section">
+    <div class="container">
+        <!-- Header -->
+        <div class="market-header">
+            <h2>
+                <span class="material-symbols-outlined">trending_up</span>
+                Live Market Prices
+            </h2>
+            <p>Real-time crop prices from major mandis across India</p>
+        </div>
+
+        <!-- Market Stats Summary -->
+        <div class="market-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">agriculture</span>
                 </div>
+                <div class="stat-value" id="totalCrops">12</div>
+                <div class="stat-label">Crops Tracked</div>
             </div>
-        </section>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">store</span>
+                </div>
+                <div class="stat-value" id="totalMandis">8</div>
+                <div class="stat-label">Active Mandis</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">trending_up</span>
+                </div>
+                <div class="stat-value" id="priceIncreases">5</div>
+                <div class="stat-label">Price Increases</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <span class="material-symbols-outlined">schedule</span>
+                </div>
+                <div class="stat-value" id="lastUpdate">Live</div>
+                <div class="stat-label">Last Updated</div>
+            </div>
+        </div>
+
+        <!-- Market Controls -->
+        <div class="market-controls">
+            <div class="search-box">
+                <span class="material-symbols-outlined">search</span>
+                <input type="text" id="marketSearch" placeholder="Search crops or markets..." onkeyup="searchMarket()">
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterMarket('all')">
+                    <span class="material-symbols-outlined">filter_list</span>
+                    All Crops
+                </button>
+                <button class="filter-btn" onclick="filterMarket('up')">
+                    <span class="material-symbols-outlined">trending_up</span>
+                    Rising
+                </button>
+                <button class="filter-btn" onclick="filterMarket('down')">
+                    <span class="material-symbols-outlined">trending_down</span>
+                    Falling
+                </button>
+                <button class="filter-btn" onclick="filterMarket('stable')">
+                    <span class="material-symbols-outlined">horizontal_rule</span>
+                    Stable
+                </button>
+            </div>
+
+            <button class="refresh-btn" onclick="refreshMarketPrices()">
+                <span class="material-symbols-outlined">refresh</span>
+                Refresh
+            </button>
+        </div>
+
+        <!-- Market Cards Grid -->
+        <div class="market-grid" id="marketGrid">
+            <!-- Cards will be dynamically inserted here -->
+        </div>
+
+        <!-- Price Chart (Hidden by default) -->
+        <div class="chart-container" id="priceChart">
+            <div class="chart-header">
+                <h3>
+                    <span class="material-symbols-outlined">show_chart</span>
+                    Price Trend Analysis
+                </h3>
+                <button class="market-btn-secondary" onclick="toggleChart()">
+                    <span class="material-symbols-outlined">close</span>
+                    Close
+                </button>
+            </div>
+            <div class="chart-placeholder" id="chartContent">
+                📊 Price trend chart for <span id="selectedCrop"></span>
+                <br><br>
+                Last 30 days data visualization
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="market-actions">
+            <button class="market-btn market-btn-primary" onclick="exportMarketData()">
+                <span class="material-symbols-outlined">download</span>
+                Export Data
+            </button>
+            <button class="market-btn market-btn-secondary" onclick="toggleChart()">
+                <span class="material-symbols-outlined">show_chart</span>
+                View Trends
+            </button>
+            <button class="market-btn market-btn-secondary" onclick="compareMarkets()">
+                <span class="material-symbols-outlined">compare</span>
+                Compare Markets
+            </button>
+        </div>
+    </div>
+</section>
     </main>
 
     <footer id="contact" class="footer">
